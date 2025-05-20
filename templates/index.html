@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online Bookstore</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+        }
+        .navbar {
+            background-color: #333;
+            padding: 10px;
+            text-align: right;
+        }
+        .navbar a {
+            color: white;
+            margin-left: 20px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            text-align: center;
+            margin: 20px 0;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+
+        .book-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .book-card {
+            display: flex;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .book-card:hover {
+            transform: scale(1.01);
+        }
+
+        .book-image {
+            flex: 0 0 200px;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .book-info {
+            padding: 20px;
+            flex: 1;
+        }
+
+        .book-info h3 {
+            margin: 0;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .book-info p {
+            margin: 8px 0;
+            color: #555;
+        }
+
+        .book-info .description {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #444;
+        }
+
+        .buttons {
+            margin-top: 15px;
+        }
+
+        .buttons button {
+            padding: 8px 15px;
+            margin-right: 10px;
+            background-color: #28a745;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .buttons button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <a href="/login">Login</a>
+        <a href="/register">Sign Up</a>
+        <a href="/upload">Upload Book</a>
+        <a href="/nearby">Nearby Libraries</a>
+    </div>
+
+    <h1>Welcome to the Online Bookstore 📚</h1>
+
+    <form method="POST">
+        <input type="text" name="search" placeholder="Search for a book...">
+        <input type="submit" value="Search">
+    </form>
+
+    <div class="book-list">
+        {% for book in books %}
+        <div class="book-card">
+            <img class="book-image" src="{{ url_for('static', filename=book.image) }}" alt="{{ book.title }}">
+            <div class="book-info">
+                <h3>{{ book.title }}</h3>
+                <p><strong>Author:</strong> {{ book.author }}</p>
+                <p><strong>Buy:</strong> ₹{{ book.price }} | <strong>Rent:</strong> ₹{{ book.rent_price }}</p>
+                <div class="description">
+                    <strong>Description:</strong>
+                    <p>{{ book.description }}</p>
+                </div>
+                <div class="buttons">
+                    <button onclick="location.href='/buy'">Buy</button>
+                    <button onclick="location.href='/rent'">Rent</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
